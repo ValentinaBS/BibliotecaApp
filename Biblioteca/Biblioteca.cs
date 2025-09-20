@@ -115,7 +115,7 @@ namespace Biblioteca
                 return ResultadoPrestamo.TOPE_PRESTAMO_ALCANZADO;
             }
 
-            // préstamo exitoso: remover libro de la biblioteca
+            // préstamo exitoso = remover libro de la biblioteca
             libros.Remove(libro);
             return ResultadoPrestamo.PRESTAMO_EXITOSO;
         }

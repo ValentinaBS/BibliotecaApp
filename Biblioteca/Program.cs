@@ -50,7 +50,6 @@ namespace Biblioteca
             MostrarResultado(biblioteca.prestarLibro("Libro5", "87654321")); // 4to (tiene que fallar por el límite de 3 préstamos)
 
             // 7) Mostrar estado final
-            Console.WriteLine("\nEstado final (libros):");
             biblioteca.listarLibros();
 
             Console.WriteLine("\nPresione ENTER para cerrar.");

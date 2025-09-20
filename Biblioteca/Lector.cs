@@ -1,7 +1,6 @@
 ﻿using Biblioteca;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace BibliotecaApp
 {
@@ -36,28 +35,6 @@ namespace BibliotecaApp
 
             prestamos.Add(libro);
             return true;
-        }
-
-        public void listarPrestamos()
-        {
-            Console.WriteLine($"Prestamos de {nombre} (DNI: {dni})");
-            if (prestamos.Count == 0)
-            {
-                Console.WriteLine("(Sin préstamos)");
-            }
-            else
-            {
-                for (int i = 0; i < prestamos.Count; i++)
-                {
-                    Console.WriteLine($"{i + 1}. {prestamos[i].getTitulo()}");
-                }
-            }
-            Console.WriteLine("\n"); // Salto de linea
-        }
-
-        public override string ToString()
-        {
-            return $"Lector: {nombre} | DNI: {dni} | Prestamos: {prestamos.Count}";
         }
     }
 }
