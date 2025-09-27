@@ -55,136 +55,186 @@ namespace Biblioteca
             Console.WriteLine("\nPresione ENTER para cerrar.");
             Console.ReadLine();
 
-            //Biblioteca biblioteca = new Biblioteca();
+            Console.WriteLine("Bienvenido/a a BibliotecaApp");
+            bool salir = false;
+            while (!salir)
+            {
+                Console.WriteLine();
+                Console.WriteLine("Elija una opción:");
+                Console.WriteLine("1) Agregar libro");
+                Console.WriteLine("2) Dar de alta lector");
+                Console.WriteLine("3) Listar libros");
+                Console.WriteLine("4) Prestar libro");
+                Console.WriteLine("5) Salir");
+                Console.Write("Opción: ");
 
-            //Console.WriteLine("Bienvenido/a a BibliotecaApp");
-            //bool salir = false;
-            //while (!salir)
-            //{
-            //    Console.WriteLine();
-            //    Console.WriteLine("Elija una opción:");
-            //    Console.WriteLine("1) Agregar libro");
-            //    Console.WriteLine("2) Dar de alta lector");
-            //    Console.WriteLine("3) Listar libros");
-            //    Console.WriteLine("4) Prestar libro");
-            //    Console.WriteLine("5) Salir");
-            //    Console.Write("Opción: ");
+                string opcion = Console.ReadLine()?.Trim();
 
-            //    string opcion = Console.ReadLine()?.Trim();
+                switch (opcion)
+                {
+                    case "1":
+                        AgregarLibroInteractivo(biblioteca);
+                        break;
 
-            //    if (opcion == "1")
-            //    {
-            //        AgregarLibroInteractivo(biblioteca);
-            //    }
-            //    else if (opcion == "2")
-            //    {
-            //        AltaLectorInteractivo(biblioteca);
-            //    }
-            //    else if (opcion == "3")
-            //    {
-            //        biblioteca.listarLibros();
-            //    }
-            //    else if (opcion == "4")
-            //    {
-            //        PrestarLibroInteractivo(biblioteca);
-            //    }
-            //    else if (opcion == "5")
-            //    {
-            //        salir = true;
-            //    }
-            //    else
-            //    {
-            //        Console.WriteLine("Opción inválida. Intente de nuevo.");
-            //    }
-            //}
+                    case "2":
+                        AltaLectorInteractivo(biblioteca);
+                        break;
 
-            //Console.WriteLine("Programa finalizado. Presione ENTER para cerrar.");
-            //Console.ReadLine();
+                    case "3":
+                        biblioteca.listarLibros();
+                        break;
+
+                    case "4":
+                        PrestarLibroInteractivo(biblioteca);
+                        break;
+
+                    case "5":
+                        salir = true;
+                        break;
+
+                    default:
+                        Console.WriteLine("Opción inválida. Intente de nuevo.");
+                        break;
+                }
+            }
+
+            Console.WriteLine("Programa finalizado. Presione ENTER para cerrar.");
+            Console.ReadLine();
         }
 
         static void MostrarResultado(ResultadoPrestamo resultado)
         {
-            if (resultado == ResultadoPrestamo.PRESTAMO_EXITOSO)
+            switch (resultado)
             {
-                Console.WriteLine("-> PRESTAMO EXITOSO");
-            }
-            else if (resultado == ResultadoPrestamo.LIBRO_INEXISTENTE)
-            {
-                Console.WriteLine("-> LIBRO INEXISTENTE");
-            }
-            else if (resultado == ResultadoPrestamo.TOPE_PRESTAMO_ALCANZADO)
-            {
-                Console.WriteLine("-> TOPE DE PRESTAMO ALCANZADO");
-            }
-            else if (resultado == ResultadoPrestamo.LECTOR_INEXISTENTE)
-            {
-                Console.WriteLine("-> LECTOR INEXISTENTE");
+                case ResultadoPrestamo.PRESTAMO_EXITOSO:
+                    Console.WriteLine("-> PRESTAMO EXITOSO");
+                    break;
+                case ResultadoPrestamo.LIBRO_INEXISTENTE:
+                    Console.WriteLine("-> LIBRO INEXISTENTE");
+                    break;
+                case ResultadoPrestamo.TOPE_PRESTAMO_ALCANZADO:
+                    Console.WriteLine("-> TOPE DE PRESTAMO ALCANZADO");
+                    break;
+                case ResultadoPrestamo.LECTOR_INEXISTENTE:
+                    Console.WriteLine("-> LECTOR INEXISTENTE");
+                    break;
             }
         }
 
-        //static void AgregarLibroInteractivo(Biblioteca biblioteca)
-        //{
-        //    Console.Write("Título: ");
-        //    string titulo = Console.ReadLine()?.Trim() ?? "";
-        //    Console.Write("Autor: ");
-        //    string autor = Console.ReadLine()?.Trim() ?? "";
-        //    Console.Write("Editorial: ");
-        //    string editorial = Console.ReadLine()?.Trim() ?? "";
+        static void AgregarLibroInteractivo(Biblioteca biblioteca)
+        {
+            const int MAX_INTENTOS = 3;
+            int intentos = 0;
+            bool agregado = false;
 
-        //    bool ok = biblioteca.agregarLibro(titulo, autor, editorial);
-        //    if (ok)
-        //    {
-        //        Console.WriteLine($"Libro '{titulo}' agregado correctamente.");
-        //    }
-        //    else
-        //    {
-        //        Console.WriteLine($"No se pudo agregar. El libro '{titulo}' ya existe.");
-        //    }
-        //}
+            while (intentos < MAX_INTENTOS && !agregado)
+            {
+                Console.Write("Título: ");
+                string titulo = Console.ReadLine()?.Trim() ?? "";
+                Console.Write("Autor: ");
+                string autor = Console.ReadLine()?.Trim() ?? "";
+                Console.Write("Editorial: ");
+                string editorial = Console.ReadLine()?.Trim() ?? "";
 
-        //static void AltaLectorInteractivo(Biblioteca biblioteca)
-        //{
-        //    Console.Write("Nombre del lector: ");
-        //    string nombre = Console.ReadLine()?.Trim() ?? "";
-        //    Console.Write("DNI del lector: ");
-        //    string dni = Console.ReadLine()?.Trim() ?? "";
+                try
+                {
 
-        //    bool ok = biblioteca.altaLector(nombre, dni);
-        //    if (ok)
-        //    {
-        //        Console.WriteLine($"Lector '{nombre}' (DNI {dni}) dado de alta.");
-        //    }
-        //    else
-        //    {
-        //        Console.WriteLine($"El lector con DNI {dni} ya está registrado.");
-        //    }
-        //}
+                    bool ok = biblioteca.agregarLibro(titulo, autor, editorial);
+                    if (ok)
+                    {
+                        Console.WriteLine($"Libro '{titulo}' agregado correctamente.");
+                        agregado = true;
+                    }
+                    else
+                    {
+                        Console.WriteLine($"No se pudo agregar. El libro '{titulo}' ya existe.");
+                        agregado = true;
+                    }
+                }
+                catch (ArgumentException ex)
+                {
+                    intentos++;
+                    Console.WriteLine($"Error: {ex.Message}");
+                    if (intentos < MAX_INTENTOS)
+                    {
+                        Console.WriteLine($"Intento {intentos} de {MAX_INTENTOS}. Vuelva a intentar \n");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Se alcanzó el máximo de intentos. Regresando al menú principal.\n");
+                    }
+                }
+            }
+        }
 
-        //static void PrestarLibroInteractivo(Biblioteca biblioteca)
-        //{
-        //    Console.Write("Título del libro a prestar: ");
-        //    string titulo = Console.ReadLine()?.Trim() ?? "";
-        //    Console.Write("DNI del lector: ");
-        //    string dni = Console.ReadLine()?.Trim() ?? "";
+        static void AltaLectorInteractivo(Biblioteca biblioteca)
+        {
+            const int MAX_INTENTOS = 3;
+            int intentos = 0;
+            bool registrado = false;
 
-        //    ResultadoPrestamo resultado = biblioteca.prestarLibro(titulo, dni);
+            while (intentos < MAX_INTENTOS && !registrado)
+            {
+                Console.Write("Nombre del lector: ");
+                string nombre = Console.ReadLine()?.Trim() ?? "";
+                Console.Write("DNI del lector: ");
+                string dni = Console.ReadLine()?.Trim() ?? "";
 
-        //    if (resultado == ResultadoPrestamo.PRESTAMO_EXITOSO)
-        //    {
-        //        Console.WriteLine("PRESTAMO EXITOSO");
-        //    }
-        //    else if (resultado == ResultadoPrestamo.LIBRO_INEXISTENTE)
-        //    {
-        //        Console.WriteLine("LIBRO INEXISTENTE");
-        //    }
-        //    else if (resultado == ResultadoPrestamo.TOPE_PRESTAMO_ALCANZADO)
-        //    {
-        //        Console.WriteLine("TOPE DE PRESTAMO ALCANZADO");
-        //    }
-        //    else if (resultado == ResultadoPrestamo.LECTOR_INEXISTENTE)
-        //    {
-        //        Console.WriteLine("LECTOR INEXISTENTE");
-        //    }
-        //}
+                try
+                {
+                    bool ok = biblioteca.altaLector(nombre, dni);
+                    if (ok)
+                    {
+                        Console.WriteLine($"Lector '{nombre}' (DNI {dni}) dado de alta.");
+                        registrado = true;
+                    }
+                    else
+                    {
+                        Console.WriteLine($"El lector con DNI {dni} ya está registrado.");
+                        registrado = true;
+                    }
+                }
+                catch (ArgumentException ex)
+                {
+                    intentos++;
+                    Console.WriteLine($"Error: {ex.Message}");
+
+                    if (intentos < MAX_INTENTOS)
+                    {
+                        Console.WriteLine($"intento {intentos} de {MAX_INTENTOS}. Vuelva a intentarlo.\n");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Se alcanzó el máximo de intentos. Regresando al menú principal.\n");
+                    }
+                }
+            }
+        }
+
+        static void PrestarLibroInteractivo(Biblioteca biblioteca)
+        {
+            Console.Write("Título del libro a prestar: ");
+            string titulo = Console.ReadLine()?.Trim() ?? "";
+            Console.Write("DNI del lector: ");
+            string dni = Console.ReadLine()?.Trim() ?? "";
+
+            ResultadoPrestamo resultado = biblioteca.prestarLibro(titulo, dni);
+
+            switch (resultado)
+            {
+                case ResultadoPrestamo.PRESTAMO_EXITOSO:
+                    Console.WriteLine("-> PRESTAMO EXITOSO");
+                    break;
+                case ResultadoPrestamo.LIBRO_INEXISTENTE:
+                    Console.WriteLine("-> LIBRO INEXISTENTE");
+                    break;
+                case ResultadoPrestamo.TOPE_PRESTAMO_ALCANZADO:
+                    Console.WriteLine("-> TOPE DE PRESTAMO ALCANZADO");
+                    break;
+                case ResultadoPrestamo.LECTOR_INEXISTENTE:
+                    Console.WriteLine("-> LECTOR INEXISTENTE");
+                    break;
+            }
+        }
     }
 }
