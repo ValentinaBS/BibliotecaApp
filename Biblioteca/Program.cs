@@ -52,7 +52,7 @@ namespace Biblioteca
             // 7) Mostrar estado final
             biblioteca.listarLibros();
 
-            Console.WriteLine("\nPresione ENTER para cerrar.");
+            Console.WriteLine("\nPresione ENTER para entrar al menú interactivo.");
             Console.ReadLine();
 
             Console.WriteLine("Bienvenido/a a BibliotecaApp");

@@ -14,8 +14,8 @@ namespace BibliotecaApp
 
         public Lector(string nombre, string dni)
         {
-            if (string.IsNullOrWhiteSpace(nombre)) throw new ArgumentException("nombre vacío", nameof(nombre));
-            if (string.IsNullOrWhiteSpace(dni)) throw new ArgumentException("dni vacío", nameof(dni));
+            if (string.IsNullOrWhiteSpace(nombre)) throw new ArgumentException("nombre vacío");
+            if (string.IsNullOrWhiteSpace(dni)) throw new ArgumentException("dni vacío");
 
             this.nombre = nombre;
             this.dni = dni;

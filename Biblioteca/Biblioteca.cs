@@ -89,7 +89,8 @@ namespace Biblioteca
 
         public bool altaLector(string nombre, string dni)
         {
-            if (string.IsNullOrWhiteSpace(dni) || string.IsNullOrWhiteSpace(nombre)) return false;
+            if (string.IsNullOrWhiteSpace(dni)) throw new ArgumentException("El dni ingresado está vacío.");
+            if (string.IsNullOrWhiteSpace(nombre)) throw new ArgumentException("El nombre ingresado está vacío.");
             if (buscarLector(dni) != null) return false;
 
             lectores.Add(new Lector(nombre, dni));
